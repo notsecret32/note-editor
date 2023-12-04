@@ -1,5 +1,6 @@
-function App() {
-	return <div className='App'>App</div>
-}
+import { routes } from 'pages/routes'
+import { RouterProvider } from 'react-router-dom'
 
-export default App
+export const App: React.FC = () => {
+	return <RouterProvider router={routes} />
+}

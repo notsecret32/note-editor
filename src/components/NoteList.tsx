@@ -3,13 +3,13 @@ import { useNotes } from 'hooks/useNotes'
 import React from 'react'
 import { Note } from './Note'
 
-const NotesList: React.FC = () => {
+export const NoteList: React.FC = () => {
 	const notes = useNotes()
 
 	return (
 		<Grid container spacing={2} direction='row'>
 			{notes.map(note => (
-				<Grid item>
+				<Grid item key={note.id}>
 					<Note
 						id={note.id}
 						title={note.title}
@@ -21,5 +21,3 @@ const NotesList: React.FC = () => {
 		</Grid>
 	)
 }
-
-export default NotesList

@@ -7,7 +7,10 @@ interface TagsSearchProps {
 	onTagSelect: (tag: string) => void
 }
 
-const TagsSearch: React.FC<TagsSearchProps> = ({ tags, onTagSelect }) => {
+export const TagsSearch: React.FC<TagsSearchProps> = ({
+	tags,
+	onTagSelect,
+}) => {
 	return (
 		<Autocomplete
 			options={tags}
@@ -15,5 +18,3 @@ const TagsSearch: React.FC<TagsSearchProps> = ({ tags, onTagSelect }) => {
 		/>
 	)
 }
-
-export default TagsSearch

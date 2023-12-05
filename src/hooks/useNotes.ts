@@ -3,16 +3,16 @@ import { INote } from 'types/note.type'
 import { getAllNotes } from 'utils/db.utils'
 
 export function useNotes() {
-	const [notes, setNotes] = useState<INote[]>([])
+  const [notes, setNotes] = useState<INote[]>([])
 
-	useEffect(() => {
-		async function fetchData() {
-			const notesData = await getAllNotes()
-			setNotes(notesData)
-		}
+  useEffect(() => {
+    async function fetchData() {
+      const notesData = await getAllNotes()
+      setNotes(notesData)
+    }
 
-		fetchData()
-	}, [notes])
+    fetchData()
+  }, [notes])
 
-	return notes
+  return notes
 }

@@ -1,4 +1,4 @@
 export interface IRoute {
-	url: string
-	component: React.ReactElement<any>
+  url: string
+  component: React.ReactElement<any>
 }

@@ -5,12 +5,22 @@ import {
 	CardContent,
 	Typography,
 } from '@mui/material'
+import { useModal } from 'hooks/useModal'
 import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { deleteNote } from 'store/noteReducer'
 import { INote } from 'types/note.type'
+import { NoteModal } from './NoteModal'
 
 export const Note: FC<INote> = ({ id, title, description, tags }) => {
+	const modal = useModal()
+
+	modal.options = {
+		title: 'Редактирование',
+		cancelButtonText: 'Отменить',
+		submitButtonText: 'Сохранить',
+	}
+
 	const dispatch = useDispatch()
 
 	const handleDeleteNote = (event: React.SyntheticEvent) => {
@@ -30,7 +40,7 @@ export const Note: FC<INote> = ({ id, title, description, tags }) => {
 				<Typography variant='body2'>{description}</Typography>
 			</CardContent>
 			<CardActions>
-				<Button size='small'>Редактировать</Button>
+				<NoteModal modalType='confirm' buttonTitle='Редактировать' {...modal} />
 				<Button size='small' onClick={handleDeleteNote}>
 					Удалить
 				</Button>

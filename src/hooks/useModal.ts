@@ -1,24 +1,18 @@
 import { useState } from 'react'
-import { IModal, IModalOptions } from 'types/modal.type'
+import { IModal, IModalOptions, defaultModalOptions } from 'types/modal.type'
 
-export const useModal = (): [() => void, IModal] => {
-	const [isOpen, setIsOpen] = useState(false)
+export const useModal = (): IModal => {
+	const [isOpen, setOpen] = useState(false)
+	const [options, setOptions] = useState<IModalOptions>(defaultModalOptions)
 
-	const onClose = () => {
-		setIsOpen(false)
+	const openModal = (options: IModalOptions = defaultModalOptions) => {
+		setOpen(true)
+		setOptions(options)
 	}
 
-	const openModal = () => {
-		setIsOpen(true)
+	const closeModal = () => {
+		setOpen(false)
 	}
 
-	const options: IModalOptions = {
-		title: '',
-		inputPlaceholder: '',
-		textFieldPlaceholder: '',
-		cancelButtonText: '',
-		submitButtonText: '',
-	}
-
-	return [openModal, { isOpen, onClose, options }]
+	return { isOpen, closeModal, openModal, options }
 }

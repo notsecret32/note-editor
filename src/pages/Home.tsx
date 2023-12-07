@@ -22,7 +22,6 @@ export const Home: FC = () => {
             <Typography
               variant="h2"
               component="h1"
-              align="center"
               sx={{
                 fontWeight: '700'
               }}

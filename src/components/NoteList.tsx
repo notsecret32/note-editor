@@ -34,7 +34,7 @@ export const NoteList: React.FC = () => {
       {noteListItems.length > 0 ? (
         noteListItems
       ) : (
-        <Typography>Нет заметок.</Typography>
+        <Typography textAlign="center">Нет заметок.</Typography>
       )}
     </List>
   )

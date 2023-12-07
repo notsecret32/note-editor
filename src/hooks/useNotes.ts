@@ -16,7 +16,7 @@ export const useNotes = () => {
     }
 
     loadNotes()
-  }, [])
+  }, [allNotes])
 
   useEffect(() => {
     const loadSelectedNotes = async () => {
@@ -25,7 +25,7 @@ export const useNotes = () => {
     }
 
     loadSelectedNotes()
-  }, [selector])
+  }, [selector, selectedNotes])
 
   return { allNotes, selectedNotes }
 }

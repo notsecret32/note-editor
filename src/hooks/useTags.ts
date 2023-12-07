@@ -11,7 +11,7 @@ export function useTags() {
     }
 
     fetchData()
-  }, [])
+  }, [tags])
 
   return useMemo(() => ({ tags }), [tags])
 }

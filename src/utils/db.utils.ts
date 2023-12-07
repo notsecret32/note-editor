@@ -35,3 +35,29 @@ export async function deleteNoteByUUID(key: string) {
   await store.delete(key)
   await tx.done
 }
+
+export async function updateNoteByUUID(note: INote) {
+  const database = await db
+  const tx = database.transaction(DATABASE_STORE_NAME, 'readwrite')
+  const store = tx.objectStore(DATABASE_STORE_NAME)
+  await store.put(note, note.id)
+  await tx.done
+}
+
+export async function getAllUniqueTags() {
+  const database = await db
+  const tx = database.transaction(DATABASE_STORE_NAME, 'readonly')
+  const store = tx.objectStore(DATABASE_STORE_NAME)
+  const records = await store.getAll()
+  await tx.done
+
+  const uniqueTags = new Set<string>()
+
+  records.forEach((note: INote) => {
+    note.tags?.forEach((tag: string) => {
+      uniqueTags.add(tag)
+    })
+  })
+
+  return Array.from(uniqueTags)
+}

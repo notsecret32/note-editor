@@ -28,12 +28,6 @@ const noteSlice = createSlice({
         ...action.payload
       }
     },
-    updateSearchTags: (state, action: PayloadAction<string[]>) => {
-      return {
-        ...state,
-        tags: action.payload
-      }
-    },
     deleteNote: (state, action: PayloadAction<string>) => {
       deleteNoteByUUID(action.payload)
       return {
@@ -44,6 +38,5 @@ const noteSlice = createSlice({
   }
 })
 
-export const { createNote, updateNote, updateSearchTags, deleteNote } =
-  noteSlice.actions
+export const { createNote, updateNote, deleteNote } = noteSlice.actions
 export default noteSlice.reducer

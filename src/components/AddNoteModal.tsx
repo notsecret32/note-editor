@@ -6,7 +6,7 @@ import {
   DialogTitle,
   TextField
 } from '@mui/material'
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createNote } from 'store/noteReducer'
 import { extractTags } from 'utils/tags.utils'
@@ -22,7 +22,7 @@ export const AddNoteModal: FC<AddNoteModalProps> = ({ isOpen, onClose }) => {
   const [noteDescription, setNoteDescription] = useState('')
   const dispatch = useDispatch()
 
-  const handleAddNoteModalAdd = () => {
+  const handleAddNoteModalAdd = useCallback(() => {
     const { tags, sentence } = extractTags(noteTitle)
 
     dispatch(
@@ -36,7 +36,7 @@ export const AddNoteModal: FC<AddNoteModalProps> = ({ isOpen, onClose }) => {
     )
 
     onClose()
-  }
+  }, [dispatch, noteTitle, noteDescription, onClose])
 
   useEffect(() => {
     if (!isOpen) {

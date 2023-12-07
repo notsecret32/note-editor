@@ -1,4 +1,3 @@
-// EditNoteModal.tsx
 import {
   Button,
   Dialog,
@@ -7,7 +6,7 @@ import {
   DialogTitle,
   TextField
 } from '@mui/material'
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateNote } from 'store/noteReducer'
 import { extractTags } from 'utils/tags.utils'
@@ -34,7 +33,7 @@ export const EditNoteModal: FC<EditNoteModalProps> = ({
     useState(noteDescription)
   const dispatch = useDispatch()
 
-  const handleEditNote = () => {
+  const handleEditNote = useCallback(() => {
     const { tags, sentence } = extractTags(noteEditedTitle || noteTitleWithTags)
 
     dispatch(
@@ -48,7 +47,14 @@ export const EditNoteModal: FC<EditNoteModalProps> = ({
     )
 
     onClose()
-  }
+  }, [
+    noteEditedTitle,
+    noteTitleWithTags,
+    noteEditedDescription,
+    noteId,
+    onClose,
+    dispatch
+  ])
 
   return (
     <Dialog open={isOpen} onClose={onClose}>

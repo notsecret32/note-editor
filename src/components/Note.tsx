@@ -1,48 +1,133 @@
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 import {
-  Button,
+  Box,
   Card,
-  CardActions,
   CardContent,
+  CardHeader,
+  IconButton,
+  Tooltip,
   Typography
 } from '@mui/material'
-import React, { FC } from 'react'
+import { DeleteNoteModal, EditNoteModal } from 'components'
+import React, { FC, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { deleteNote } from 'store/noteReducer'
 import { INote } from 'types/note.type'
 
-export const Note: FC<INote> = ({ id, title, description, tags }) => {
+export const Note: FC<INote> = ({
+  id,
+  title,
+  titleWithTags,
+  description,
+  tags
+}) => {
   const dispatch = useDispatch()
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
   const handleEditNote = (event: React.SyntheticEvent) => {
     event.preventDefault()
-
-    console.log('start edit')
+    setIsEditModalOpen(true)
   }
 
   const handleDeleteNote = (event: React.SyntheticEvent) => {
     event.preventDefault()
+    setIsDeleteModalOpen(true)
+  }
+
+  const handleEditModalClose = () => {
+    setIsEditModalOpen(false)
+  }
+
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const handleNoteDeleteModal = () => {
     dispatch(deleteNote(id))
+    handleDeleteModalClose()
   }
 
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {tags?.map((tag) => tag.name)}
-        </Typography>
-        <Typography variant="h5" component="h1">
-          {title}
-        </Typography>
-        <Typography variant="body2">{description}</Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" onClick={handleEditNote}>
-          Редактировать
-        </Button>
-        <Button size="small" onClick={handleDeleteNote}>
-          Удалить
-        </Button>
-      </CardActions>
-    </Card>
+    <>
+      <Card
+        sx={{
+          margin: '15px 0',
+          maxWidth: 540,
+          minWidth: 540
+        }}
+      >
+        <CardHeader
+          title={title}
+          titleTypographyProps={{
+            variant: 'h6',
+            component: 'h1',
+            fontWeight: 700,
+            fontSize: 30
+          }}
+          sx={{
+            textAlign: 'center'
+          }}
+        />
+        <CardContent>
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            sx={{
+              padding: '5px 0'
+            }}
+          >
+            {description || 'Нет описания.'}
+          </Typography>
+        </CardContent>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            p: 2
+          }}
+        >
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            sx={{
+              padding: '5px 0',
+              flex: 1
+            }}
+          >
+            {tags?.map((tag) => `${tag} `) || 'Нет тегов.'}
+          </Typography>
+
+          <Box>
+            <Tooltip title="Редактировать">
+              <IconButton onClick={handleEditNote}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Удалить">
+              <IconButton onClick={handleDeleteNote}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        </Box>
+      </Card>
+      <EditNoteModal
+        isOpen={isEditModalOpen}
+        onClose={handleEditModalClose}
+        noteId={id}
+        noteTitle={title}
+        noteTitleWithTags={titleWithTags}
+        noteDescription={description}
+      />
+      <DeleteNoteModal
+        isOpen={isDeleteModalOpen}
+        onClose={handleDeleteModalClose}
+        onDelete={handleNoteDeleteModal}
+      />
+    </>
   )
 }

@@ -7,10 +7,7 @@ import {
 
 export const db = openDB(DATABASE_NAME, 1, {
   upgrade(db) {
-    db.createObjectStore(DATABASE_STORE_NAME, {
-      keyPath: 'id',
-      autoIncrement: true
-    })
+    db.createObjectStore(DATABASE_STORE_NAME)
   }
 })
 

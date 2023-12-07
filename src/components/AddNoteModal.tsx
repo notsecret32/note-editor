@@ -4,12 +4,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
+  TextField,
+  Typography
 } from '@mui/material'
 import { FC, useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createNote } from 'store/noteReducer'
-import { extractTags } from 'utils/tags.utils'
+import { extractTags, validate } from 'utils/tags.utils'
 import { v4 } from 'uuid'
 
 interface AddNoteModalProps {
@@ -19,10 +20,21 @@ interface AddNoteModalProps {
 
 export const AddNoteModal: FC<AddNoteModalProps> = ({ isOpen, onClose }) => {
   const [noteTitle, setNoteTitle] = useState('')
+  const [isNoteTitleValid, setIsNoteTitleValid] = useState(false)
   const [noteDescription, setNoteDescription] = useState('')
   const dispatch = useDispatch()
 
+  const validateNoteTitle = (title: string) => {
+    setNoteTitle(title)
+    const isValidated = validate(title)
+    isValidated ? setIsNoteTitleValid(true) : setIsNoteTitleValid(false)
+  }
+
   const handleAddNoteModalAdd = useCallback(() => {
+    if (!isNoteTitleValid) {
+      return
+    }
+
     const { tags, sentence } = extractTags(noteTitle)
 
     dispatch(
@@ -38,6 +50,13 @@ export const AddNoteModal: FC<AddNoteModalProps> = ({ isOpen, onClose }) => {
     onClose()
   }, [dispatch, noteTitle, noteDescription, onClose])
 
+  const handleCloseModal = () => {
+    onClose()
+    setNoteTitle('')
+    setNoteDescription('')
+    setIsNoteTitleValid(true)
+  }
+
   useEffect(() => {
     if (!isOpen) {
       setNoteTitle('')
@@ -49,6 +68,15 @@ export const AddNoteModal: FC<AddNoteModalProps> = ({ isOpen, onClose }) => {
     <Dialog open={isOpen} onClose={onClose}>
       <DialogTitle>Добавить заметку</DialogTitle>
       <DialogContent>
+        <Typography
+          variant="body1"
+          component="h2"
+          fontSize={14}
+          color="red"
+          display={isNoteTitleValid ? 'none' : 'block'}
+        >
+          Использованы запрещающие символы ({'@$%^&!*(),.?":{}|<>'}).
+        </Typography>
         <TextField
           autoFocus
           margin="dense"
@@ -57,8 +85,12 @@ export const AddNoteModal: FC<AddNoteModalProps> = ({ isOpen, onClose }) => {
           type="text"
           fullWidth
           value={noteTitle}
-          onChange={(e) => setNoteTitle(e.target.value)}
+          onChange={(e) => validateNoteTitle(e.target.value)}
           required
+          error={!isNoteTitleValid}
+          inputProps={{
+            maxLength: 45
+          }}
         />
         <TextField
           margin="dense"
@@ -73,7 +105,7 @@ export const AddNoteModal: FC<AddNoteModalProps> = ({ isOpen, onClose }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={handleCloseModal} color="primary">
           Отменить
         </Button>
         <Button onClick={handleAddNoteModalAdd} color="primary">

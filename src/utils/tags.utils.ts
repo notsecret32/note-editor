@@ -1,6 +1,11 @@
 type Tags = {
   tags: string[]
   sentence: string
+  validated: boolean
+}
+
+export const validate = (input: string) => {
+  return /[@$%^&!*(),.?":{}|<>]/g.test(input) ? false : true
 }
 
 export const extractTags = (input: string): Tags => {
@@ -18,6 +23,7 @@ export const extractTags = (input: string): Tags => {
   })
 
   const sentence = sentenceWords.join(' ')
+  const validated = validate(input)
 
-  return { tags, sentence }
+  return { tags, sentence, validated }
 }

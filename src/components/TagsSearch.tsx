@@ -17,6 +17,7 @@ export const TagsSearch: React.FC = () => {
     <Autocomplete
       multiple
       options={tags}
+      noOptionsText="Нет тегов."
       onChange={handleChange}
       renderInput={(params) => (
         <TextField

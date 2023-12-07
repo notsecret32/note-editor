@@ -61,3 +61,15 @@ export async function getAllUniqueTags() {
 
   return Array.from(uniqueTags)
 }
+
+export async function getAllNotesByTags(tags: string[]) {
+  const database = await db
+  const tx = database.transaction(DATABASE_STORE_NAME, 'readonly')
+  const store = tx.objectStore(DATABASE_STORE_NAME)
+  const notes = await store.getAll()
+  await tx.done
+
+  return notes.filter((note: INote) => {
+    return note.tags?.some((tag: string) => tags.includes(tag))
+  })
+}

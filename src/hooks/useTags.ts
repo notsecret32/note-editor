@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { getAllUniqueTags } from 'utils/db.utils'
 
 export function useTags() {
@@ -11,7 +11,7 @@ export function useTags() {
     }
 
     fetchData()
-  }, [tags])
+  }, [])
 
-  return { tags }
+  return useMemo(() => ({ tags }), [tags])
 }

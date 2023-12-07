@@ -21,7 +21,7 @@ interface AddNoteModalProps {
 
 export const AddNoteModal: FC<AddNoteModalProps> = ({ isOpen, onClose }) => {
   const [noteTitle, setNoteTitle] = useState('')
-  const [isNoteTitleValid, setIsNoteTitleValid] = useState(false)
+  const [isNoteTitleValid, setIsNoteTitleValid] = useState(true)
   const [noteDescription, setNoteDescription] = useState('')
   const dispatch = useDispatch()
 

@@ -7,6 +7,7 @@ import {
   DialogTitle
 } from '@mui/material'
 import { FC } from 'react'
+import { modalTheme } from 'utils/theme.utils'
 
 interface DeleteNoteModalProps {
   isOpen: boolean
@@ -20,7 +21,7 @@ export const DeleteNoteModal: FC<DeleteNoteModalProps> = ({
   onDelete
 }) => {
   return (
-    <Dialog open={isOpen} onClose={onClose}>
+    <Dialog open={isOpen} onClose={onClose} sx={modalTheme}>
       <DialogTitle>Удаление заметки</DialogTitle>
       <DialogContent>
         <DialogContentText>

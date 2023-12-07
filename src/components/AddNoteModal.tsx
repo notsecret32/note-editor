@@ -11,6 +11,7 @@ import { FC, useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createNote } from 'store/noteReducer'
 import { extractTags, validate } from 'utils/tags.utils'
+import { modalTheme } from 'utils/theme.utils'
 import { v4 } from 'uuid'
 
 interface AddNoteModalProps {
@@ -65,7 +66,7 @@ export const AddNoteModal: FC<AddNoteModalProps> = ({ isOpen, onClose }) => {
   }, [isOpen])
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
+    <Dialog open={isOpen} onClose={onClose} sx={modalTheme}>
       <DialogTitle>Добавить заметку</DialogTitle>
       <DialogContent>
         <Typography

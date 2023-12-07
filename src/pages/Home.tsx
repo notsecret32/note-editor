@@ -2,6 +2,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { Container, Grid, IconButton, Typography } from '@mui/material'
 import { AddNoteModal, NoteList, TagsSearch } from 'components'
 import { FC, useState } from 'react'
+import { headerTheme, homeTheme } from 'utils/theme.utils'
 
 export const Home: FC = () => {
   const [isAddNoteModalOpen, setIsAddNoteModalOpen] = useState(false)
@@ -19,13 +20,7 @@ export const Home: FC = () => {
       <Container>
         <Grid container justifyContent="center">
           <Grid item>
-            <Typography
-              variant="h2"
-              component="h1"
-              sx={{
-                fontWeight: '700'
-              }}
-            >
+            <Typography variant="h2" component="h1" sx={headerTheme}>
               Заметки
             </Typography>
           </Grid>
@@ -44,7 +39,7 @@ export const Home: FC = () => {
               <AddIcon />
             </IconButton>
           </Grid>
-          <Grid item>
+          <Grid item sx={homeTheme}>
             <NoteList />
           </Grid>
         </Grid>

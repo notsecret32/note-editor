@@ -14,6 +14,7 @@ import React, { FC, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { deleteNote } from 'store/noteReducer'
 import { INote } from 'types/note.type'
+import { noteTheme } from 'utils/theme.utils'
 
 export const Note: FC<INote> = ({
   id,
@@ -51,13 +52,7 @@ export const Note: FC<INote> = ({
 
   return (
     <>
-      <Card
-        sx={{
-          margin: '15px 0',
-          maxWidth: 540,
-          minWidth: 540
-        }}
-      >
+      <Card sx={noteTheme}>
         <CardHeader
           title={title}
           titleTypographyProps={{

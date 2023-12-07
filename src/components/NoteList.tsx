@@ -24,7 +24,13 @@ export const NoteList: React.FC = () => {
   }, [allNotes, selectedNotes])
 
   return (
-    <List>
+    <List
+      sx={{
+        '& .MuiPaper-root': {
+          marginBottom: '10px'
+        }
+      }}
+    >
       {noteListItems.length > 0 ? (
         noteListItems
       ) : (

@@ -10,6 +10,7 @@ import { FC, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateNote } from 'store/noteReducer'
 import { extractTags } from 'utils/tags.utils'
+import { modalTheme } from 'utils/theme.utils'
 
 interface EditNoteModalProps {
   isOpen: boolean
@@ -57,7 +58,7 @@ export const EditNoteModal: FC<EditNoteModalProps> = ({
   ])
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
+    <Dialog open={isOpen} onClose={onClose} sx={modalTheme}>
       <DialogTitle>Редактировать заметку | {noteTitle}</DialogTitle>
       <DialogContent>
         <TextField

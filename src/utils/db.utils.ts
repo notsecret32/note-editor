@@ -1,6 +1,9 @@
 import { openDB } from 'idb'
 import { INote } from 'types/note.type'
-import { DATABASE_NAME, DATABASE_STORE_NAME } from './constants.utils'
+import {
+  DATABASE_NAME,
+  DATABASE_STORE_NAME
+} from '../constants/store.constants'
 
 export const db = openDB(DATABASE_NAME, 1, {
   upgrade(db) {
